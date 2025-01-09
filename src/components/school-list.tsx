@@ -9,17 +9,23 @@ const fetchData = async (): Promise<SchoolData[]> => {
     return json
 }
 
-export const SchoolList = () => {
+export const useSchoolData = () => {
     const [schools, setSchools] = useState<SchoolData[]>([])
 
     useEffect(() => {
         fetchData().then(setSchools)
     }, [])
 
+    return schools
+}
+
+export const SchoolList = () => {
+    const schools = useSchoolData()
+
     return (
         <ul>
             {schools.map(school => {
-                return <SchoolItem school={school} />
+                return <SchoolItem key={school.name} school={school} />
             })}
         </ul>
     )
